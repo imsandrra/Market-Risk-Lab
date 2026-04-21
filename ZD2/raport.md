@@ -1,22 +1,22 @@
 # Raport: Value at Risk – metody historyczna i parametryczna
 
 **Autor:** Oleksandra Krykun  
-**Data:** 14 kwietnia 2026  
-**Kurs:** Market Risk Lab – Zadanie Domowe 1
+**Data:** 21 kwietnia 2026  
+**Kurs:** Market Risk Lab – Zadanie Domowe 2
 
 ---
 
-### Cel
+## Cel
 
 Obliczenie VaR dwoma metodami (historyczną i parametryczną) dla dwóch portfeli złożonych z akcji wybranych w Zadaniu 1, przy poziomach ufności 95% i 99%, oraz porównanie wyników.
 
 ---
 
-### 1. Definicja portfeli
+## 1. Definicja portfeli
 
-Zdefiniowano dwa portfele złożone z tych samych 5 spółek sektora finansowego USA (GS, C, AIG, BAC, MS), różniące się wyłącznie strukturą wag:
+Zdefiniowano dwa portfele złożone z tych samych 5 spółek sektora finansowego Stanów Zjednoczonych (GS, C, AIG, BAC, MS), różniące się wyłącznie strukturą wag:
 
-- **Portfel A – równe wagi (1/N):** każda spółka ma wagę 20%. Klasyczny benchmark dywersyfikacji nieważonej.
+- **Portfel A – równe wagi:** każda spółka ma wagę 20%. Klasyczny benchmark dywersyfikacji nieważonej.
 - **Portfel B – losowe wagi:** wagi wylosowane przez normalizację wartości bezwzględnych z $\mathcal{N}(0,1)$, co gwarantuje wagi dodatnie sumujące się do 1 (`seed=7` dla powtarzalności).
 
 | Ticker | Spółka | Portfel A | Portfel B |
@@ -32,28 +32,28 @@ Dzienne stopy zwrotu portfeli obliczono jako ważoną sumę log-stóp zwrotu pos
 
 ---
 
-### 2. Okno 250 dni roboczych
+## 2. Okno 250 dni roboczych
 
 VaR wyznaczono na podstawie **ostatnich 250 dni roboczych** z pełnego okresu próby:
 
-- Okno: **2007-08-03 – 2008-07-30**
+- Okno: **03-08-2007 – 30-07-2008**
 - Liczba obserwacji: **250**
 
-Jest to standardowe minimum wymagane przez regulacje Basel II/III dla modeli wewnętrznych banków. Okno to obejmuje fazę narastającego kryzysu finansowego – od sygnału BNP Paribas (09.08.2007) do końca analizowanego okresu.
+Jest to standardowe minimum wymagane przez regulacje Basel II/III dla modeli wewnętrznych banków. Okno to obejmuje fazę narastającego kryzysu finansowego – od sygnału BNP Paribas (09.08.2007, zamrożenie wypłat z trzech funduszy hedgingowych o uzasadnieniu „complete evaporation of liquidity" na rynku instrumentów opartych na kredytach subprime) do końca analizowanego okresu.
 
 ![Rozkład dziennych stóp zwrotu portfeli](portfele_histogram.png)
 
-Na histogramach widoczna jest wyraźna **dodatnia skośność** obu portfeli – rozkład jest przesunięty w prawo względem krzywej normalnej. Oznacza to, że duże dodatnie zwroty (odbicia rynkowe: marzec 2008 po Bear Stearns, lipiec 2008) są częstsze niż przewiduje symetryczny rozkład normalny, podczas gdy lewy ogon (straty) jest stosunkowo węższy empirycznie niż gaussowski.
+Na histogramach widoczna jest dodatnia skośność obu portfeli - ujemnych stóp zwrotu jest więcej niż dodatnich, jednak sporadyczne duże odbicia rynkowe (marzec 2008 po uratowaniu Bear Stearns, lipiec 2008) tworzą długi prawy ogon, który podciąga średnią powyżej mediany. Lewy ogon empiryczny jest węższy od gaussowskiego - model normalny przeszacowuje prawdopodobieństwo dużych strat -— natomiast prawy ogon jest grubszy, co oznacza, że duże dodatnie zwroty zdarzają się częściej niż przewiduje rozkład normalny.
 
 ---
 
-### 3. Historyczny VaR
+## 3. Historyczny VaR
 
 VaR historyczny = ujemny kwantyl empiryczny stóp zwrotu, bez żadnych założeń parametrycznych:
 
 $$\text{VaR}_{\alpha}^{\text{hist}} = -Q_{1-\alpha}(r_1, \ldots, r_{250})$$
 
-Przy 95%: 13. najgorszy wynik z 250 obserwacji. Przy 99%: 3. najgorszy wynik z 250.
+Przy 95%: 13-ty najgorszy wynik z 250 obserwacji. Przy 99%: trzeci najgorszy wynik z 250.
 
 | Portfel | VaR hist. 95% | VaR hist. 99% |
 |---------|--------------|--------------|
@@ -64,24 +64,24 @@ Przy 95%: 13. najgorszy wynik z 250 obserwacji. Przy 99%: 3. najgorszy wynik z 2
 
 ---
 
-### 4. Parametryczny VaR
+## 4. Parametryczny VaR
 
-Zakładamy $r_t \sim \mathcal{N}(\mu, \sigma^2)$ i wyznaczamy VaR analitycznie:
+Zakładamy, że stopy zwrotu portfela mają rozkład normalny $\mathcal{N}(\mu, \sigma^2)$.  
+VaR wyznaczamy analitycznie ze wzoru:
 
 $$\text{VaR}_{\alpha}^{\text{param}} = -(\mu - z_{\alpha} \cdot \sigma)$$
 
-gdzie $z_{0.05} \approx 1{,}645$ i $z_{0.01} \approx 2{,}326$; $\mu$ i $\sigma$ estymowane z okna 250 dni.
+gdzie $z_{\alpha}$ to kwantyl standardowego rozkładu normalnego:
+- dla $\alpha = 95\%$: $z_{0.05} \approx 1{,}645$
+- dla $\alpha = 99\%$: $z_{0.01} \approx 2{,}326$
 
-| Portfel | $\mu$ dzienna | $\sigma$ dzienna | VaR param. 95% | VaR param. 99% |
-|---------|-------------|----------------|---------------|---------------|
-| Portfel A | −0,2004% | 2,9540% | **5,0594%** | **7,0725%** |
-| Portfel B | −0,1409% | 2,9784% | **5,0400%** | **7,0698%** |
+$\mu$ i $\sigma$ estymujemy z 250-dniowego okna historycznego.
 
 ![Parametryczny VaR](var_parametryczny.png)
 
 ---
 
-### 5. Porównanie wyników
+## 5. Porównanie wyników
 
 | Portfel | Poziom ufności | VaR historyczny | VaR parametryczny | Różnica (param − hist) |
 |---------|---------------|----------------|------------------|----------------------|
@@ -104,9 +104,9 @@ Statystyki opisowe portfeli w oknie 250 dni:
 
 ---
 
-### 6. Wnioski
+## 6. Wnioski
 
-#### Który portfel jest mniej ryzykowny?
+### Który portfel jest mniej ryzykowny?
 
 **Portfel B (losowe wagi) jest mniej ryzykowny** według VaR historycznego na obu poziomach ufności (4,59% vs 4,75% przy 95%; 5,89% vs 6,00% przy 99%). Wylosowane wagi koncentrują się na GS (30,89%) i MS (32,94%) – bankach inwestycyjnych, które w oknie sierpień 2007 – lipiec 2008 radziły sobie relatywnie lepiej od Citigroup i AIG. Jednocześnie Portfel B ma niższą ekspozycję na AIG (6,67%) i C (8,73%) – spółki z największymi stratami w tym okresie. Potwierdza to niższy najgorszy dzień Portfela B (−6,22% vs −7,47%).
 
