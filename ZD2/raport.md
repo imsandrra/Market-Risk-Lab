@@ -1,6 +1,8 @@
----
+# Raport: Value at Risk – metody historyczna i parametryczna
 
-## Zadanie Domowe 2: Value at Risk – metody historyczna i parametryczna
+**Autor:** Oleksandra Krykun  
+**Data:** 14 kwietnia 2026  
+**Kurs:** Market Risk Lab – Zadanie Domowe 1
 
 ---
 
