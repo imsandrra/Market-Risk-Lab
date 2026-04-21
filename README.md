@@ -11,8 +11,8 @@ Repozytorium zawiera rozwiązania zadań domowych z kursu **Market Risk Lab** pr
 
 ## Dane
 
-Akcje sektora finansowego USA (GS, C, AIG, BAC, MS), okres 2006-08-01 – 2008-07-31.
+Akcje sektora finansowego Stanów Zjednoczonych (GS, C, AIG, BAC, MS), okres 2006-08-01 – 2008-07-31.
 
 ## Autor
 
-Oleksandra Krykun
+Oleksandra Krykun - oleksandrakrykun2@gmail.com
