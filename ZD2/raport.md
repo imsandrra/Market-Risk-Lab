@@ -123,11 +123,9 @@ Wylosowane wagi Portfela B koncentrują się na GS (30,89%) i MS (32,94%) – ba
 
 Przyczyny:
 
-1. **Dodatnia skośność empirycznego rozkładu stóp zwrotu.** Rzeczywisty rozkład w badanym oknie posiada skośność dodatnią. Model normalny, symetryczny względem średniej, nie uwzględnia tej asymetrii: symetrycznie „rozciąga" oba ogony na podstawie odchylenia standardowego wyznaczonego z całego okna. W efekcie parametryczny lewy ogon jest szerszy niż empiryczny, co bezpośrednio zawyża VaR parametryczny względem historycznego. Metoda historyczna odczytuje kwantyl wprost z danych – krótki gruby lewy ogon daje niższy, bardziej realistyczny poziom straty.
+1. **Dodatnia skośność empirycznego rozkładu stóp zwrotu.** Rzeczywisty rozkład w badanym oknie posiada krótki, gruby lewy ogon oraz długi, cieńszy prawy ogon – czyli skośność dodatnią. Model normalny, symetryczny względem średniej, nie uwzględnia tej asymetrii: symetrycznie „rozciąga" oba ogony na podstawie odchylenia standardowego wyznaczonego z całego okna. W efekcie parametryczny lewy ogon jest szerszy niż empiryczny, co bezpośrednio zawyża VaR parametryczny względem historycznego. Metoda historyczna odczytuje kwantyl wprost z danych – krótki gruby lewy ogon daje niższy, bardziej realistyczny poziom straty.
 
 2. **Wpływ kwantyla normalnego przy 99%.** Przy wyższym poziomie ufności stosowany jest kwantyl $z_{0.01} \approx 2{,}326$, znacznie bardziej odległy od centrum rozkładu niż $z_{0.05} \approx 1{,}645$ przy 95%. Im dalej w ogon, tym mocniej założenie normalności zawyża szacunek względem empirii – dlatego rozbieżność między metodami niemal trzykrotnie wzrasta (z ~0,3–0,4 pp do ~1,1 pp) przy przejściu z 95% na 99%.
-
-3. **Stosunkowo spokojny lewy ogon w badanym oknie 250 dni.** Okno sierpień 2007 – lipiec 2008 obejmuje narastający kryzys, ale jeszcze nie jego kulminację (upadek Lehman Brothers, wrzesień 2008). Empiryczne ekstrema z tego okresu są poważne, lecz wciąż nieporównywalne z tym, co model normalny „przewiduje" na poziomie 99% przy wysokim odchyleniu standardowym z całego okna.
 
 ### 6.3 Wniosek końcowy
 
