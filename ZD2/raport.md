@@ -114,8 +114,6 @@ Wylosowane wagi Portfela B koncentrują się na GS (30,89%) i MS (32,94%) – ba
 
 > Różnice są jednak **małe** (0,1–0,3 pp przy VaR historycznym), ponieważ wysokie korelacje między spółkami sektora finansowego w warunkach kryzysu ograniczają skuteczność dywersyfikacji wewnątrzsektorowej niezależnie od wag.
 
----
-
 ### 6.2 Która metoda daje wyższy VaR?
 
 **We wszystkich czterech przypadkach VaR parametryczny jest wyższy** niż historyczny, a różnica rośnie wraz z poziomem ufności:
@@ -131,45 +129,11 @@ Przyczyny:
 
 3. **Stosunkowo spokojny lewy ogon w badanym oknie 250 dni.** Okno sierpień 2007 – lipiec 2008 obejmuje narastający kryzys, ale jeszcze nie jego kulminację (upadek Lehman Brothers, wrzesień 2008). Empiryczne ekstrema z tego okresu są poważne, lecz wciąż nieporównywalne z tym, co model normalny „przewiduje" na poziomie 99% przy wysokim odchyleniu standardowym z całego okna.
 
----
-
 ### 6.3 Wniosek końcowy
 
 W analizowanym oknie kryzysowym **metoda historyczna jest bardziej adekwatna** – oddaje rzeczywisty kształt rozkładu, w tym jego asymetrię. Model parametryczny przeszacowuje ryzyko ogonowe ze względu na założenie symetrii rozkładu normalnego, które w tym oknie nie jest spełnione.
 
 Należy jednak podkreślić, że w innych warunkach rynkowych (silna ujemna skośność, wysoka kurtoza) zależność byłaby odwrotna i to metoda historyczna mogłaby niedoszacowywać ryzyko. Dlatego **obie metody powinny być stosowane równolegle** jako wzajemny sprawdzian.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
----
-## 6. Wnioski
-
-### Który portfel jest mniej ryzykowny?
-
-**Portfel B (losowe wagi) jest mniej ryzykowny** według VaR historycznego na obu poziomach ufności (4,59% vs 4,75% przy 95%; 5,89% vs 6,00% przy 99%). Wylosowane wagi koncentrują się na GS (30,89%) i MS (32,94%) – bankach inwestycyjnych, które w oknie sierpień 2007 – lipiec 2008 radziły sobie relatywnie lepiej od Citigroup i AIG. Jednocześnie Portfel B ma niższą ekspozycję na AIG (6,67%) i C (8,73%) – spółki z największymi stratami w tym okresie. Potwierdza to niższy najgorszy dzień Portfela B (−6,22% vs −7,47%).
-
-Warto jednak zaznaczyć, że różnice są **małe** (0,1–0,3 pp przy VaR historycznym) ze względu na wysokie korelacje między spółkami sektora finansowego w warunkach kryzysu – dywersyfikacja wewnątrzsektorowa jest ograniczona niezależnie od wag.
-
-#### Metoda historyczna vs. parametryczna – która daje wyższy VaR?
-
-We wszystkich czterech przypadkach **VaR parametryczny jest wyższy** niż historyczny, przy czym różnica rośnie wraz z poziomem ufności (od ~0,3–0,4 pp przy 95% do ~1,1 pp przy 99%).
-
-Przyczyną jest **dodatnia skośność** obu portfeli w analizowanym oknie (0,93 i 1,02). Okno 2007–2008 zawierało nie tylko silne spadki, ale i gwałtowne odbicia rynkowe (marzec 2008 po uratowaniu Bear Stearns, lipiec 2008), które przesuwają empiryczny rozkład w prawo. Model gaussowski zakłada symetrię – przez co jego symetryczny lewy ogon jest grubszy niż faktycznie obserwowany, generując wyższy VaR parametryczny, szczególnie na poziomie 99%.
-
-Kurtoza nadmiarowa obu portfeli (~2,8–2,9) jest wyraźnie wyższa od zera, co wskazuje na grubsze ogony niż rozkład normalny. Efekt ten jest jednak niewystarczający, by VaR historyczny przekroczył parametryczny – dominuje tu opisany wcześniej efekt dodatniej skośności, która przesuwa empiryczny lewy ogon w kierunku centrum względem symetrycznego modelu gaussowskiego.
-
-**Ogólny wniosek:** Dobór metody ma istotne znaczenie. W tym konkretnym oknie kryzysowym model parametryczny **przeszacowuje** ryzyko ogonowe ze względu na asymetrię rozkładu. W innych warunkach (silna ujemna skośność, wysoka kurtoza) zależność byłaby odwrotna. Stanowi to argument za stosowaniem obydwu metod równolegle jako wzajemnego sprawdzianu.
 
 ---
 *Źródła danych: Yahoo Finance. Teoria: Market Risk Lab – prezentacja „Miary at Risk" (kwiecień 2026).*
