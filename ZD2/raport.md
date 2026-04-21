@@ -99,7 +99,7 @@ Statystyki opisowe portfeli w oknie 250 dni:
 | Średnia dzienna | −0,2004% | −0,1409% |
 | Odch. std. dzienna | 2,9540% | 2,9784% |
 | Skośność | 0,9266 | 1,0200 |
-| Kurtoza (excess) | 2,8097 | 2,9424 |
+| Kurtoza | 2,8097 | 2,9424 |
 | Min (najgorszy dzień) | −7,4662% | −6,2229% |
 
 ---
