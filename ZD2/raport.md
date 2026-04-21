@@ -99,7 +99,7 @@ Statystyki opisowe portfeli w oknie 250 dni:
 | Średnia dzienna | −0,2004% | −0,1409% |
 | Odch. std. dzienna | 2,9540% | 2,9784% |
 | Skośność | 0,9266 | 1,0200 |
-| Kurtoza | 2,8097 | 2,9424 |
+| Kurtoza (excess) | 2,8097 | 2,9424 |
 | Min (najgorszy dzień) | −7,4662% | −6,2229% |
 
 ---
@@ -118,7 +118,7 @@ We wszystkich czterech przypadkach **VaR parametryczny jest wyższy** niż histo
 
 Przyczyną jest **dodatnia skośność** obu portfeli w analizowanym oknie (0,93 i 1,02). Okno 2007–2008 zawierało nie tylko silne spadki, ale i gwałtowne odbicia rynkowe (marzec 2008 po uratowaniu Bear Stearns, lipiec 2008), które przesuwają empiryczny rozkład w prawo. Model gaussowski zakłada symetrię – przez co jego symetryczny lewy ogon jest grubszy niż faktycznie obserwowany, generując wyższy VaR parametryczny, szczególnie na poziomie 99%.
 
-Kurtoza obu portfeli (~2,8–2,9, nadmiarowa ≈ 0) jest zbliżona do rozkładu normalnego – ogony empiryczne nie są grubsze od gaussowskich, co dodatkowo tłumaczy brak efektu „grubych ogonów" zwiększającego VaR historyczny.
+Kurtoza nadmiarowa obu portfeli (~2,8–2,9) jest wyraźnie wyższa od zera, co wskazuje na grubsze ogony niż rozkład normalny. Efekt ten jest jednak niewystarczający, by VaR historyczny przekroczył parametryczny – dominuje tu opisany wcześniej efekt dodatniej skośności, która przesuwa empiryczny lewy ogon w kierunku centrum względem symetrycznego modelu gaussowskiego.
 
 **Ogólny wniosek:** Dobór metody ma istotne znaczenie. W tym konkretnym oknie kryzysowym model parametryczny **przeszacowuje** ryzyko ogonowe ze względu na asymetrię rozkładu. W innych warunkach (silna ujemna skośność, wysoka kurtoza) zależność byłaby odwrotna. Stanowi to argument za stosowaniem obydwu metod równolegle jako wzajemnego sprawdzianu.
 
