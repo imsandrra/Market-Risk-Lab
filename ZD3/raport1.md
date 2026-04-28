@@ -15,7 +15,7 @@ Wycena dwóch europejskich opcji (call i put) na akcje Goldman Sachs (GS) przy u
 ## 1. Dane i parametry
 
 **Źródło danych:** Yahoo Finance (`yfinance`), dzienne ceny zamknięcia skorygowane o dywidendy i splity (`Adj Close`).  
-**Okres:** 1 sierpnia 2006 – 30 lipca 2008 (503 dni sesyjne) – ten sam co w Zadaniach 1 i 2.  
+**Okres:** 1 sierpnia 2006 – 30 lipca 2008 (503 dni sesyjne).  
 **Akcja bazowa:** Goldman Sachs (GS).
 
 Wszystkie parametry wyceny wyznaczono bezpośrednio z danych historycznych:
@@ -113,10 +113,10 @@ Na wykresie widoczny jest rozkład log-normalny cen końcowych $S_T$ (lewy panel
 
 | Typ | N ścieżek | BS [$] | MC [$] | SE MC [$] | 95% CI MC [$] | BS ∈ CI? | Różnica [$] | Różnica [%] |
 |-----|-----------|--------|--------|-----------|---------------|----------|-------------|-------------|
-| CALL | 10 000 | 13,6850 | 13,6056 | ±0,2398 | [13,1355 ; 14,0757] | ✓ | −0,0794 | −0,5800% |
-| CALL | 50 000 | 13,6850 | 13,7514 | ±0,1076 | [13,5404 ; 13,9623] | ✓ | +0,0664 | +0,4853% |
-| PUT | 10 000 | 14,9823 | 14,9354 | ±0,1841 | [14,5746 ; 15,2963] | ✓ | −0,0468 | −0,3126% |
-| PUT | 50 000 | 14,9823 | 15,0214 | ±0,0828 | [14,8591 ; 15,1837] | ✓ | +0,0392 | +0,2614% |
+| CALL | 10 000 | 13,6850 | 13,6056 | ±0,2398 | [13,1355 ; 14,0757] | True | −0,0794 | −0,5800% |
+| CALL | 50 000 | 13,6850 | 13,7514 | ±0,1076 | [13,5404 ; 13,9623] | True | +0,0664 | +0,4853% |
+| PUT | 10 000 | 14,9823 | 14,9354 | ±0,1841 | [14,5746 ; 15,2963] | True | −0,0468 | −0,3126% |
+| PUT | 50 000 | 14,9823 | 15,0214 | ±0,0828 | [14,8591 ; 15,1837] | True | +0,0392 | +0,2614% |
 
 Cena BS mieści się w przedziale ufności 95% MC we wszystkich czterech przypadkach (BS ∈ CI ✓).
 
