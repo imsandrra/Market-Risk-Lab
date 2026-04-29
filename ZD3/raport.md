@@ -24,14 +24,14 @@ Wszystkie parametry wyceny wyznaczono bezpośrednio z danych historycznych:
 - **σ** – historyczna zmienność roczna z log-stóp zwrotu całego okresu: **36,82%**
 - **K** – strike ~ATM, zaokrąglony do $5: **$140,00** (dla call i put)
 - **T** – termin wygaśnięcia: **0,5 roku (6 miesięcy)**
-- **r** – stopa wolna od ryzyka: **1,50%** (rentowność 6M US T-Bill, połowa 2008 r. — środowisko agresywnych obniżek stóp Fed po kryzysie Bear Stearns)
+- **r** – stopa wolna od ryzyka: **1,85%** (rzeczywista rentowność 6M US T-Bill na dzień 30.07.2008, źródło: FRED)
 
 | Parametr | Symbol | Wartość |
 |----------|--------|---------|
 | Cena aktywa bazowego | S₀ | $137,66 |
 | Strike (call i put) | K | $140,00 |
 | Czas do wygaśnięcia | T | 0,5 roku |
-| Stopa wolna od ryzyka | r | 1,50% |
+| Stopa wolna od ryzyka | r | 1,85% |
 | Zmienność historyczna | σ | 36,82% |
 
 Obie opcje są nieznacznie **out-of-the-money** (OTM): cena spot ($137,66) jest poniżej strike'u ($140,00), co oznacza, że call jest OTM, a put jest ITM — co dobrze odzwierciedla kontekst rynkowy połowy 2008 r., gdy akcje GS znajdowały się pod presją, tracąc od szczytu (~$250 w końcu 2007 r.) ponad 40%.
@@ -56,25 +56,25 @@ $$C = S_0\,N(d_1) - K\,e^{-rT}\,N(d_2), \qquad P = K\,e^{-rT}\,N(-d_2) - S_0\,N(
 
 | Wielkość | Wartość |
 |----------|---------|
-| $d_1$ | $+0{,}094144$ |
-| $d_2$ | $-0{,}166202$ |
-| $N(d_1)$ | $0{,}537503$ |
-| $N(d_2)$ | $0{,}433999$ |
-| $N(-d_1)$ | $0{,}462497$ |
-| $N(-d_2)$ | $0{,}566001$ |
+| $d_1$ | $+0{,}100867$ |
+| $d_2$ | $-0{,}159480$ |
+| $N(d_1)$ | $0{,}540172$ |
+| $N(d_2)$ | $0{,}436646$ |
+| $N(-d_1)$ | $0{,}459828$ |
+| $N(-d_2)$ | $0{,}563354$ |
 
-Wartość $d_1 \approx 0{,}094$ wskazuje, że opcja call jest blisko pieniądza — $N(d_1) \approx 0{,}54$, czyli delta call wynosi ok. 54%, co odpowiada sytuacji lekko OTM przy wysokiej zmienności. Wartość $d_2 \approx -0{,}166$ jest ujemna, co oznacza, że ryzykowo-neutralne prawdopodobieństwo wygaśnięcia call w pieniądzu ($N(d_2) \approx 43\%$) jest poniżej 50%.
+Wartość $d_1 \approx 0{,}101$ wskazuje, że opcja call jest blisko pieniądza — $N(d_1) \approx 0{,}54$, czyli delta call wynosi ok. 54%, co odpowiada sytuacji lekko OTM przy wysokiej zmienności. Wartość $d_2 \approx -0{,}159$ jest ujemna, co oznacza, że ryzykowo-neutralne prawdopodobieństwo wygaśnięcia call w pieniądzu ($N(d_2) \approx 44\%$) jest poniżej 50%.
 
 ### Wyniki
 
 | Typ opcji | Cena Black-Scholes |
 |-----------|--------------------|
-| **CALL** | **$13,6850** |
-| **PUT** | **$14,9823** |
+| **CALL** | **$13,7908** |
+| **PUT** | **$14,8451** |
 
 Wyższa cena put niż call jest zgodna z parytetem put-call: opcja put jest głębiej ITM ($S_0 < K$). Weryfikacja parytetu put-call:
 
-$$C - P = S_0 - K \cdot e^{-rT} \implies 13{,}6850 - 14{,}9823 = 137{,}66 - 140 \cdot e^{-0{,}015 \cdot 0{,}5}$$
+$$C - P = S_0 - K \cdot e^{-rT} \implies 13{,}7908 - 14{,}8451 = 137{,}66 - 140 \cdot e^{-0{,}0185 \cdot 0{,}5}$$
 
 Błąd numeryczny: $0{,}00$ ✓ — parytet spełniony dokładnie.
 
@@ -96,16 +96,18 @@ Zastosowano **antitetyczne zmienne losowe** — dla każdego wylosowanego $Z$ uw
 
 | Typ | N ścieżek | Cena MC | SE |
 |-----|-----------|---------|-----|
-| CALL | 10 000 | $13,6056 | ±$0,2398 |
-| CALL | 50 000 | $13,7514 | ±$0,1076 |
-| PUT | 10 000 | $14,9354 | ±$0,1841 |
-| PUT | 50 000 | $15,0214 | ±$0,0828 |
+| CALL | 10 000 | $13,7121 | ±$0,2406 |
+| CALL | 50 000 | $13,8571 | ±$0,1080 |
+| PUT | 10 000 | $14,7989 | ±$0,1832 |
+| PUT | 50 000 | $14,8842 | ±$0,0824 |
 
 Przy N = 50 000 błąd standardowy spada do ok. $0,11 (call) i $0,08 (put) — w obu przypadkach cena BS mieści się w przedziale ufności 95% MC.
 
+![Przykładowe ścieżki GBM (N = 200)](mc_sciezki.png)
+
 ![Rozkład cen końcowych GS i wypłat opcji (N = 50 000)](mc_rozklad.png)
 
-Na wykresie widoczny jest rozkład log-normalny cen końcowych $S_T$ (lewy panel), asymetryczny z wyraźnie grubym prawym ogonem ze względu na wysoką zmienność (σ = 36,82%). Strike K = $140 leży nieznacznie powyżej S₀ = $137,66, dzieląc rozkład na strefę wypłat call (prawo od K, ITM: 43,2%) i put (lewo od K, ITM: 56,8%). Prawy panel pokazuje rozkłady wypłat warunkowych — obydwa mają długi prawy ogon typowy dla opcji europejskich.
+Na wykresie widoczny jest rozkład log-normalny cen końcowych $S_T$ (lewy panel), asymetryczny z wyraźnie grubym prawym ogonem ze względu na wysoką zmienność (σ = 36,82%). Strike K = $140 leży nieznacznie powyżej S₀ = $137,66, dzieląc rozkład na strefę wypłat call (prawo od K) i put (lewo od K). Prawy panel pokazuje rozkłady wypłat warunkowych — obydwa mają długi prawy ogon typowy dla opcji europejskich.
 
 ---
 
@@ -113,10 +115,10 @@ Na wykresie widoczny jest rozkład log-normalny cen końcowych $S_T$ (lewy panel
 
 | Typ | N ścieżek | BS [$] | MC [$] | SE MC [$] | 95% CI MC [$] | BS ∈ CI? | Różnica [$] | Różnica [%] |
 |-----|-----------|--------|--------|-----------|---------------|----------|-------------|-------------|
-| CALL | 10 000 | 13,6850 | 13,6056 | ±0,2398 | [13,1355 ; 14,0757] | True | −0,0794 | −0,5800% |
-| CALL | 50 000 | 13,6850 | 13,7514 | ±0,1076 | [13,5404 ; 13,9623] | True | +0,0664 | +0,4853% |
-| PUT | 10 000 | 14,9823 | 14,9354 | ±0,1841 | [14,5746 ; 15,2963] | True | −0,0468 | −0,3126% |
-| PUT | 50 000 | 14,9823 | 15,0214 | ±0,0828 | [14,8591 ; 15,1837] | True | +0,0392 | +0,2614% |
+| CALL | 10 000 | 13,7908 | 13,7121 | ±0,2406 | [13,2405 ; 14,1837] | ✓ | −0,0787 | −0,5703% |
+| CALL | 50 000 | 13,7908 | 13,8571 | ±0,1080 | [13,6455 ; 14,0687] | ✓ | +0,0663 | +0,4811% |
+| PUT | 10 000 | 14,8451 | 14,7989 | ±0,1832 | [14,4398 ; 15,1581] | ✓ | −0,0461 | −0,3107% |
+| PUT | 50 000 | 14,8451 | 14,8842 | ±0,0824 | [14,7226 ; 15,0457] | ✓ | +0,0391 | +0,2634% |
 
 Cena BS mieści się w przedziale ufności 95% MC we wszystkich czterech przypadkach (BS ∈ CI ✓).
 
@@ -132,15 +134,15 @@ Współczynniki greckie mierzą wrażliwość ceny opcji na zmiany parametrów m
 
 | Greek | CALL | PUT | Interpretacja |
 |-------|------|-----|---------------|
-| **Delta** (Δ) | +0,5375 | −0,4625 | hedge ratio — zmiana ceny opcji na $1 zmiany S₀ |
+| **Delta** (Δ) | +0,5402 | −0,4598 | hedge ratio — zmiana ceny opcji na $1 zmiany S₀ |
 | **Gamma** (Γ) | +0,0111 | +0,0111 | zmiana Delty na $1 zmiany S₀ (identyczna dla call i put) |
-| **Vega** (𝒱) | +0,3866 | +0,3866 | zmiana ceny opcji na 1 pp zmianę σ [$] |
-| **Theta** (Θ) | −0,0601 | −0,0518 | dzienny zanik wartości czasowej [$] |
+| **Vega** (𝒱) | +0,3864 | +0,3864 | zmiana ceny opcji na 1 pp zmianę σ [$] |
+| **Theta** (Θ) | −0,0609 | −0,0507 | dzienny zanik wartości czasowej [$] |
 
 **Interpretacja w kontekście kryzysu 2008:**
 
 - **Delta call ≈ 0,54** oznacza, że opcja jest blisko ATM — hedge portfela 1 opcji call wymaga posiadania ok. 0,54 akcji GS.
-- **Vega = $0,39** na 1 pp zmianę σ oznacza, że w środowisku kryzysowym, gdzie implied vol GS potrafiła wzrosnąć o 10 pp w ciągu kilku sesji, premia opcyjna rosła o ~$3,87. Wysoka Vega czyni te opcje szczególnie wrażliwymi na zmiany rynkowego strachu (VIX).
+- **Vega = $0,39** na 1 pp zmianę σ oznacza, że w środowisku kryzysowym, gdzie implied vol GS potrafiła wzrosnąć o 10 pp w ciągu kilku sesji, premia opcyjna rosła o ~$3,86. Wysoka Vega czyni te opcje szczególnie wrażliwymi na zmiany rynkowego strachu (VIX).
 - **Theta call = −$0,06/dzień** — każda kolejna sesja bez ruchu ceny kosztuje posiadacza call ok. 6 centów. Przy T = 0,5 roku i wysokiej zmienności zanik wartości czasowej jest umiarkowany.
 
 ---
@@ -157,7 +159,7 @@ Błąd standardowy estymatora MC maleje odwrotnie proporcjonalnie do pierwiastka
 
 $$\text{SE}(N) \propto \frac{1}{\sqrt{N}}$$
 
-Zwiększenie N z 10 000 do 50 000 (5-krotnie) redukuje SE o czynnik $\sqrt{5} \approx 2{,}24$ — co potwierdzają wyniki: SE dla call spada z $0,2398 do $0,1076 (stosunek: 2,23×), a dla put z $0,1841 do $0,0828 (stosunek: 2,22×). Zbieżność jest wyraźnie widoczna na wykresie w skali logarytmicznej.
+Zwiększenie N z 10 000 do 50 000 (5-krotnie) redukuje SE o czynnik $\sqrt{5} \approx 2{,}24$ — co potwierdzają wyniki: SE dla call spada z $0,2406 do $0,1080 (stosunek: 2,23×), a dla put z $0,1832 do $0,0824 (stosunek: 2,22×). Zbieżność jest wyraźnie widoczna na wykresie w skali logarytmicznej.
 
 ### 6.3 Kontekst rynkowy — wpływ kryzysu na wycenę
 
@@ -176,4 +178,4 @@ Black-Scholes jest optymalny dla standardowych opcji europejskich w modelu GBM. 
 
 ---
 
-*Źródła danych: Yahoo Finance. Teoria: Market Risk Lab – prezentacja „Derivatives" (kwiecień 2026).*
+*Źródła danych: Yahoo Finance, FRED. Teoria: Market Risk Lab – prezentacja „Derivatives" (kwiecień 2026).*
